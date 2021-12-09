@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        
+        <!-- Link font awesome 6.0. -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.7.2/font/bootstrap-icons.min.css" integrity="sha512-1fPmaHba3v4A7PaUsComSM4TBsrrRGs+/fv0vrzafQ+Rw+siILTiJa0NtFfvGeyY5E182SDTaF5PqP+XOHgJag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            :root {
+                --light-color: rgba(36,36,36);
+                --darker-color: rgba(27,27,27);
+                --darkest-color: rgb(17,17,17);
+                }
+            html, body {
+                color: white;
+            }
+            
+            #header {
+                background-color: var(--light-color)
+            }
+            
+            #close-btn {
+                position: absolute;
+                top: 0;
+                right: 15px;
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-top: 0;
+                padding-bottom: 0;
+                border-radius: 0;
+            }
+
+            .nav {
+                height: 525px;
+            }
+
+            .nav-icon {
+                margin-right: 20px;
+                color: white;
+                font-size:22px;
+            }
+
+            .nav-link {
+                white-space: nowrap;
+                font-size: 1.5vw;
+                color: white;
+            }
+
+            .nav-link:hover {
+                color: #ffc107;
+                background-color: rgba(27, 27,27, 0.7);
+            }
+
+            .active-img {
+                width: 100%;
+                height: 500px;
+                padding: 20px 20px 0 20px;
+            }
+
+            .test {
+                background-color: var(--light-color)
+            }
+
+            section {
+                background-color: var(--darkest-color);
+                height: 525px;
+                
+            }
+
+            .vote-section {
+                background-color: var(--darker-color);
+                height: 50px;
+            }
+
+            #votes-to-skip {
+                margin-left: 20px;
+                color: white;
+                width: 100px;
+            }
+            
+            /* #votes-to-skip-count {
+                margin-left: 50px;
+                margin-bottom: 0;
+                color: white;
+                width: 100px;
+                font-weight: 700;
+            }
+
+            .votes-to-skip-text {
+                margin-left: 20px;
+                margin-bottom: 0;
+                color: white;
+                width: 100px;
+                font-size: 14px;
+            } */
+
+            #search {
+                width: 25%;
+                height: 30px;
+                border-radius: 10px;
+                /* padding: 10px; */
+                margin:10px;
+            }
+
+            .media-controls {
+                background-color: var(--darker-color);
+                height: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div id="header" class="border-bottom border-info">
+                        <p class="text-center m-0">JukeBox</p>
+                    </div>
+                    <button id="close-btn" class="btn btn-danger btn-sm">X</button>
+                </div>
+            </div>
+
+     
+            
+            <div class="row">
+               
+                    <div class="col-3 border-rig pr-0">
+                        <nav>
+                            <ul class="nav flex-column test">
+                                <li class="nav-item ">
+                                    
+                                    <a class="nav-link" href="#" id="active-btn">
+                                        <i class="bi bi-music-note nav-icon"></i>Active
+
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"  id="queue-btn">
+                                        <i class="bi bi-list-ul nav-icon"></i>Queue
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"  id="all-btn">
+                                        <i class="bi bi-file-earmark-music-fill nav-icon"></i>All Songs
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"  id="settings-btn">
+                                        <i class="bi bi-gear-fill nav-icon"></i>Settings
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                         
+                    </div>
+                  
+                    
+                <div class="col-9 pl-0">
+                    <section id="active">
+                        <img id="active-song-image" class="img-fluid active-img" src="https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg" alt="">
+                        <p id="active-song-text" class="text-center">Lil Baby - Ready ft. Gunna (Official Audio)</p>
+                    </section>
+
+                    <section id="Queue" style="display: none;  padding-top: 10px; overflow: scroll">
+                        <!-- Create a nice input text box that's 25% of the parents width and rounded -->
+
+                        <input type="text" class="form-control" id="search" placeholder="Search for a song..." >
+                        <table class="table table-responsive">
+                            <thead>
+                              <tr>
+                                <th scope="col">Thumbnail</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Link</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Requester</th>
+                                <th scope="col">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <!-- image, name, link, duration, requester -->
+                                <th scope="row"><img class="img-fluid" src="https://i.ytimg.com/vi/I4jh4ojwSoM/maxresdefault.jpg" width=100 height=100></th>
+                                <td class="song-name">Lil Baby - Dreams 2 Reality ft. NoCap (Official Audio)</td>
+                                <td>https://www.youtube.com/watch?v=jjStJ0YOgJk</td>
+                                <td>100</td>
+                                <td>Follow Bot</td>
+                                <td style="white-space: nowrap">
+                                    <button style="white-space: nowrap" class="btn btn-info btn-sm">Queue song</button>
+                                    <button style="white-space: nowrap" class="btn btn-danger btn-sm">Delete song</button>
+                                </td>
+                              </tr>
+                              
+                            </tbody>
+                          </table>
+                    </section>
+                </div> 
+            
+
+            </div>
+
+            <div class="row">
+                <div class="col-3 pr-0">
+                    <div class="vote-section border-top border-info">
+                        <p id="votes-to-skip-count" class="text-center mb-0">0/3</p>
+                        <p class="text-center">VOTES TO SKIP</p>
+                    </div>
+                </div>
+
+                <div class="col-9 pl-0">
+                    <div class="media-controls border-top border-info">
+                        <i class="bi bi-skip-forward-btn-fill font-size-5"></i>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        
+        <script>
+
+            // Get Active and Queue.
+            const active = document.getElementById('active');
+            const queue = document.getElementById('Queue');
+
+            // Display Active if active is clicked.
+            const activeBtn = document.getElementById('active-btn');
+            activeBtn.addEventListener('click', () => {
+                active.style.display = 'block';
+                queue.style.display = 'none';
+            });
+
+            // Display Queue if queue is clicked.
+            const queueBtn = document.getElementById('queue-btn');
+            queueBtn.addEventListener('click', () => {
+                console.log(1)
+                active.style.display = 'none';
+                queue.style.display = 'block';
+            });
+
+            active.style.display = 'none';
+            queue.style.display = 'block';
+
+            // Create a function that adds a song to the queue.
+            const addSong = (image, name, link, duration, requester) => {
+                const table = document.querySelector('table');
+                const tr = document.createElement('tr');
+                const td1 = document.createElement('td');
+                const td2 = document.createElement('td');
+                const td3 = document.createElement('td');
+                const td4 = document.createElement('td');
+                const td5 = document.createElement('td');
+                const td6 = document.createElement('td');
+                
+                td1.innerHTML = `<img class="img-fluid" src="${image}" width=100 height=100>`;
+                td2.innerHTML = name;
+                td2.classList.add('song-name');
+                td3.innerHTML = link;
+                td4.innerHTML = duration;
+                td5.innerHTML = requester;
+                td6.innerHTML = `<button class="btn btn-info btn-sm">Queue song</button>
+                                 <button class="btn btn-danger btn-sm">Delete song</button>`;
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+
+                table.appendChild(tr);
+            }
+
+            // Create a function that removes a song from the queue.
+           
+            const setActiveSong = (name, image) => {
+                const activeSongText = document.getElementById('active-song-text');
+                const activeSongImage = document.getElementById('active-song-image');
+                activeSongText.innerHTML = name;
+                activeSongImage.src = image;
+            }
+            
+            
+
+            const input = document.getElementById('search');
+            input.addEventListener('keyup', () => {
+                displaySongByName(input.value);
+            });
+
+
+
+        </script>
+
+    </body>
+</html>
+
