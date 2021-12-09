@@ -110,6 +110,30 @@
                 background-color: var(--darker-color);
                 height: 50px;
             }
+
+            /* Change the thumb of the range slider input to black. */
+            .slider {
+                -webkit-appearance: none;
+                width: 100%;
+                height: 5px;
+                background: rgba(10,10,10);
+                outline: none;
+                opacity: 0.7;
+                -webkit-transition: .2s;
+                transition: opacity .2s;
+                border-radius: 10%;
+            }
+
+
+                .slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 10px;
+                height: 10px;
+                background: #17a2b8;
+                border-radius: 50%;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
@@ -168,7 +192,7 @@
                         <!-- Create a nice input text box that's 25% of the parents width and rounded -->
 
                         <input type="text" class="form-control" id="search" placeholder="Search for a song..." >
-                        <table class="table table-responsive">
+                        <table class="table">
                             <thead>
                               <tr>
                                 <th scope="col">Thumbnail</th>
@@ -179,16 +203,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr id="I4jh4ojwSoM">
-                                <!-- image, name, link, duration, requester -->
-                                <th scope="row"><img class="img-fluid" src="https://i.ytimg.com/vi/I4jh4ojwSoM/maxresdefault.jpg" width=100 height=100></th>
-                                <td class="song-name">Lil Baby - Dreams 2 Reality ft. NoCap (Official Audio)</td>
-                                <td>100</td>
-                                <td>Follow Bot</td>
-                                <td style="white-space: nowrap">
-                                    <button style="font-size: 13px;" class="btn btn-warning btn-sm text-dark">Skip >></button>
-                                </td>
-                              </tr>
+                             
                               
                             </tbody>
                           </table>
@@ -208,7 +223,17 @@
 
                 <div class="col-9 pl-0">
                     <div class="media-controls border-top border-info">
-                        <i class="bi bi-skip-forward-btn-fill font-size-5"></i>
+                        <div class="row">
+                            <div class="col-2 pr-0">
+                                <p class="text-center" id="seconds-into-song">0:00</p>                        
+                            </div>
+                            <div class="col-8">
+                                <input type="range" class="slider" id="song-progress" min="0" max="100" value="0" style="width: 100%">
+                            </div>
+                            <div class="col-2">
+                                <p class="text-center" id="total-song-length">0:00</p>
+                            </div>
+                        </div>                   
                     </div>
                 </div>
             </div>
@@ -240,7 +265,23 @@
             active.style.display = 'none';
             queue.style.display = 'block';
 
-            // Create a function that adds a song to the queue.
+            // Protect the string from XSS.
+            function escapeHtml(unsafe) {
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            // Seconds into minutes and seconds format.
+            const secondsToMinutesAndSeconds = (seconds) => {
+                const minutes = Math.floor(seconds / 60);
+                const secondsLeft = seconds % 60;
+                return `${minutes}:${secondsLeft < 10 ? '0' : ''}${secondsLeft}`;
+            }
+
             const addSongToQueue = (image, name, duration, requester, id) => {
                 const table = document.querySelector('table');
                 const tr = document.createElement('tr');
@@ -259,6 +300,8 @@
 
                 tr.setAttribute('id', id);
                 
+                name = escapeHtml(name);
+                requester = escapeHtml(requester);
                 
                 td1.innerHTML = `<img class="img-fluid" src="${image}" width=100 height=100>`;
                 td2.innerHTML = `<td class="song-name">${name}</td>`;
@@ -288,6 +331,24 @@
                 tr.remove();
             }
 
+            const setTotalSongLength = (seconds) => {
+                const slider = document.getElementById('song-progress');
+                slider.value = 0;
+                const totalSongLength = document.getElementById('total-song-length');
+                totalSongLength.innerHTML = secondsToMinutesAndSeconds(seconds);
+                slider.max = seconds;
+            }
+
+            const setSecondsIntoSong = (seconds) => {
+                const secondsIntoSong = document.getElementById('seconds-into-song');
+
+                minutes = secondsToMinutesAndSeconds(seconds);
+                
+                secondsIntoSong.innerHTML = secondsToMinutesAndSeconds(seconds);
+                const slider = document.getElementById('song-progress');
+                slider.value = seconds;
+            }
+
             // Create a function that removes a song from the queue.
            
             const setActiveSong = (name, image) => {
@@ -297,16 +358,8 @@
                 activeSongImage.src = image;
             }
 
-
-
-
             
-
-            const input = document.getElementById('search');
-            input.addEventListener('keyup', () => {
-                displaySongByName(input.value);
-            });
-
+            
 
 
         </script>
