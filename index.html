@@ -113,7 +113,7 @@
         </style>
     </head>
     <body>
-        <div class="container-fluid p-0">
+        <div class="container-fluid p-0" style="overflow: hidden">
             <div class="row">
                 <div class="col-12">
                     <div id="header" class="border-bottom border-info">
@@ -126,8 +126,7 @@
      
             
             <div class="row">
-               
-                    <div class="col-3 border-rig pr-0">
+                    <div class="col-3 border-right border-info pr-0">
                         <nav>
                             <ul class="nav flex-column test">
                                 <li class="nav-item ">
@@ -174,7 +173,6 @@
                               <tr>
                                 <th scope="col">Thumbnail</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Link</th>
                                 <th scope="col">Duration</th>
                                 <th scope="col">Requester</th>
                                 <th scope="col">Actions</th>
@@ -185,12 +183,11 @@
                                 <!-- image, name, link, duration, requester -->
                                 <th scope="row"><img class="img-fluid" src="https://i.ytimg.com/vi/I4jh4ojwSoM/maxresdefault.jpg" width=100 height=100></th>
                                 <td class="song-name">Lil Baby - Dreams 2 Reality ft. NoCap (Official Audio)</td>
-                                <td>https://www.youtube.com/watch?v=jjStJ0YOgJk</td>
                                 <td>100</td>
                                 <td>Follow Bot</td>
                                 <td style="white-space: nowrap">
-                                    <button style="white-space: nowrap" class="btn btn-info btn-sm">Queue song</button>
-                                    <button style="white-space: nowrap" class="btn btn-danger btn-sm">Delete song</button>
+                                    <button style="font-size: 12px" class="btn btn-info btn-sm">Queue song</button>
+                                    <button style="font-size: 12px" class="btn btn-danger btn-sm">Delete song</button>
                                 </td>
                               </tr>
                               
@@ -256,22 +253,22 @@
                 const td6 = document.createElement('td');
                 
                 td1.innerHTML = `<img class="img-fluid" src="${image}" width=100 height=100>`;
-                td2.innerHTML = name;
-                td2.classList.add('song-name');
-                td3.innerHTML = link;
-                td4.innerHTML = duration;
-                td5.innerHTML = requester;
-                td6.innerHTML = `<button class="btn btn-info btn-sm">Queue song</button>
-                                 <button class="btn btn-danger btn-sm">Delete song</button>`;
+                td2.innerHTML = `<td class="song-name">${name}</td>`;
+                td3.innerHTML = `<td>${duration}</td>`;
+                td4.innerHTML = `<td>${requester}</td>`;
+                td5.innerHTML = `<td style="white-space: nowrap">
+                                    <button style="font-size: 12px" class="btn btn-info btn-sm">Queue song</button>
+                                    <button style="font-size: 12px" class="btn btn-danger btn-sm">Delete song</button>
+                                </td>`;
 
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
                 tr.appendChild(td4);
                 tr.appendChild(td5);
-                tr.appendChild(td6);
 
                 table.appendChild(tr);
+
             }
 
             // Create a function that removes a song from the queue.
