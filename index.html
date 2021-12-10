@@ -19,7 +19,7 @@
                 color: white;
             }
             
-            th {
+            th, td {
                 border-top: none !important;
                 border-bottom: 1px solid var(--info) !important;
             }
@@ -74,6 +74,7 @@
             section {
                 background-color: var(--darkest-color);
                 height: 525px;
+                
                 
             }
 
@@ -190,12 +191,11 @@
                     
                 <div class="col-9 pl-0">
                     <section id="active">
-                        <img id="active-song-image" class="img-fluid active-img" src="https://media.architecturaldigest.com/photos/5890e88033bd1de9129eab0a/1:1/w_870,h_870,c_limit/Artist-Designed%20Album%20Covers%202.jpg" alt="">
-                        <p id="active-song-text" class="text-center">Lil Baby - Ready ft. Gunna (Official Audio)</p>
+                        <img id="active-song-image" class="img-fluid active-img" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg" alt="">
+                        <p id="active-song-text" class="text-center">! No song active !</p>
                     </section>
 
                     <section id="Queue" style="display: none;  padding-top: 0; overflow: scroll">
-                        <!-- Create a nice input text box that's 25% of the parents width and rounded -->
 
                         <table class="table">
                             <thead style="border-top: none;">
@@ -233,7 +233,7 @@
                                 <p class="text-center" id="seconds-into-song">0:00</p>                        
                             </div>
                             <div class="col-8">
-                                <input type="range" class="slider" id="song-progress" min="0" max="100" value="0" step=0.1 style="width: 100%">
+                                <input type="range" class="slider"  id="song-progress" min="0" max="100" value="0" step=0.1 style="width: 100%; pointer-events: none;">
                             </div>
                             <div class="col-2">
                                 <p class="text-center" id="total-song-length">0:00</p>
@@ -254,21 +254,33 @@
 
             // Display Active if active is clicked.
             const activeBtn = document.getElementById('active-btn');
+            const queueBtn = document.getElementById('queue-btn');
+
             activeBtn.addEventListener('click', () => {
                 active.style.display = 'block';
                 queue.style.display = 'none';
+                activeBtn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
+                queueBtn.style.backgroundColor = '';
+
+                activeBtn.style.color = '#ffc107';
+                queueBtn.style.color = '#ffffff';
+            
             });
+            activeBtn.click();
 
             // Display Queue if queue is clicked.
-            const queueBtn = document.getElementById('queue-btn');
             queueBtn.addEventListener('click', () => {
-                console.log(1)
                 active.style.display = 'none';
                 queue.style.display = 'block';
+                // Set queue button to have a background color when queue is clicked.
+                queueBtn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
+                activeBtn.style.backgroundColor = '';
+
+                queueBtn.style.color = '#ffc107';
+                activeBtn.style.color = '#ffffff';
             });
 
-            active.style.display = 'none';
-            queue.style.display = 'block';
+   
 
             // Protect the string from XSS.
             function escapeHtml(unsafe) {
@@ -365,6 +377,10 @@
                 activeSongText.innerHTML = name;
                 activeSongImage.src = image;
             }
+
+
+
+
 
             
             
