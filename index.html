@@ -476,8 +476,9 @@
 
 
             removeSongFromQueue = (id) => {
+                const table = document.querySelector('#Queue table tbody');
                 const tr = document.getElementById(id);
-                tr.remove();
+                table.removeChild(tr);
             }
 
             const setTotalSongLength = (seconds) => {
