@@ -213,6 +213,23 @@
                             </tbody>
                           </table>
                     </section>
+
+                    <section id="All" style="display: none;  padding-top: 0; overflow: scroll">
+                        <table class="table">
+                            <thead style="border-top: none;">
+                              <tr>
+                                <th scope="col">Thumbnail</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Requester</th>
+                                <th scope="col">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                             
+                              
+                            </tbody>
+                          </table>            
                 </div> 
             
 
@@ -251,34 +268,60 @@
             // Get Active and Queue.
             const active = document.getElementById('active');
             const queue = document.getElementById('Queue');
-
+            const all = document.getElementById('All');
             // Display Active if active is clicked.
             const activeBtn = document.getElementById('active-btn');
             const queueBtn = document.getElementById('queue-btn');
+            const allBtn = document.getElementById('all-btn');
 
             activeBtn.addEventListener('click', () => {
                 active.style.display = 'block';
                 queue.style.display = 'none';
+                all.style.display = 'none';
+
                 activeBtn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
                 queueBtn.style.backgroundColor = '';
+                allBtn.style.backgroundColor = '';
 
                 activeBtn.style.color = '#ffc107';
                 queueBtn.style.color = '#ffffff';
+                allBtn.style.color = '#ffffff';
             
             });
             activeBtn.click();
 
             // Display Queue if queue is clicked.
             queueBtn.addEventListener('click', () => {
-                active.style.display = 'none';
                 queue.style.display = 'block';
-                // Set queue button to have a background color when queue is clicked.
+                active.style.display = 'none';
+                all.style.display = 'none';
+
                 queueBtn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
                 activeBtn.style.backgroundColor = '';
+                allBtn.style.backgroundColor = '';
+
 
                 queueBtn.style.color = '#ffc107';
                 activeBtn.style.color = '#ffffff';
+                allBtn.style.color = '#ffffff';
             });
+
+
+            // Display all songs if all songs is clicked.
+            allBtn.addEventListener('click', () => {
+                all.style.display = 'block';
+                active.style.display = 'none';
+                queue.style.display = 'none';
+
+                allBtn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
+                activeBtn.style.backgroundColor = '';
+                queueBtn.style.backgroundColor = '';
+
+                allBtn.style.color = '#ffc107';
+                activeBtn.style.color = '#ffffff';
+                queueBtn.style.color = '#ffffff';
+            });
+
 
    
 
@@ -300,7 +343,7 @@
             }
 
             const addSongToQueue = (image, name, duration, requester, id) => {
-                const table = document.querySelector('table');
+                const table = document.querySelector('#Queue table tbody');
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td');
                 const td2 = document.createElement('td');
@@ -322,7 +365,7 @@
                 
                 td1.innerHTML = `<img class="img-fluid" src="${image}" width=100 height=100>`;
                 td2.innerHTML = `<td class="song-name">${name}</td>`;
-                td3.innerHTML = `<td>${duration}</td>`;
+                td3.innerHTML = `<td>${secondsToMinutesAndSeconds(duration)}</td>`;
                 td4.innerHTML = `<td>${requester}</td>`;
                 td5.innerHTML = `<td style="white-space: nowrap">
                                     <button style="font-size: 13px;" class="btn btn-warning btn-sm text-dark" onclick="alert('skip_' + '${id}')">Skip >></button>
@@ -340,6 +383,55 @@
 
                 table.appendChild(tr);
 
+            }
+
+            const addSongToAll = (image, name, duration, requester, id) => {
+                const table = document.querySelector('#All table tbody');
+                const tr = document.createElement('tr');
+                const td1 = document.createElement('td');
+                const td2 = document.createElement('td');
+                const td3 = document.createElement('td');
+                const td4 = document.createElement('td');
+                const td5 = document.createElement('td');
+                const td6 = document.createElement('td');
+
+                const img = document.createElement('img');
+                img.src = image;
+                img.className = 'img-fluid';
+                img.width = 100;
+                img.height = 100;
+
+                tr.setAttribute('id', id);
+                
+                name = escapeHtml(name);
+                requester = escapeHtml(requester);
+                
+                td1.innerHTML = `<img class="img-fluid" src="${image}" width=100 height=100>`;
+                td2.innerHTML = `<td class="song-name">${name}</td>`;
+                td3.innerHTML = `<td>${secondsToMinutesAndSeconds(duration)}</td>`;
+                td4.innerHTML = `<td>${requester}</td>`;
+                td5.innerHTML = `<td style="white-space: nowrap">
+                                    <button style="font-size: 13px;" class="btn btn-success btn-sm text-white" onclick="alert('queue_' + '${id}')">Queue</button>
+                                    <button style="font-size: 13px;" class="btn btn-danger btn-sm text-white" onclick="alert('delete_' + '${id}')">Delete</button>
+                                </td>`;
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+
+                table.appendChild(tr);
+
+            }
+
+
+            // Remove song from all.
+            const removeSongFromAll = (id) => {
+                const table = document.querySelector('#All table tbody');
+                const tr = document.getElementById(id);
+                table.removeChild(tr);
             }
 
 
