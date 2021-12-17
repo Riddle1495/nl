@@ -146,6 +146,10 @@
                 border-radius: 50%;
                 cursor: pointer;
             }
+
+        .text-lime {
+            color: #aeea00;
+        }
         </style>
     </head>
     <body>
@@ -166,10 +170,8 @@
                         <nav>
                             <ul class="nav flex-column test">
                                 <li class="nav-item ">
-                                    
                                     <a class="nav-link" href="#" id="active-btn">
                                         <i class="bi bi-music-note nav-icon"></i>Active
-
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -187,6 +189,11 @@
                                         <i class="bi bi-gear-fill nav-icon"></i>Settings
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"  id="logs-btn">
+                                        <i class="bi bi-file-earmark-text nav-icon"></i>Logs
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
 
@@ -195,12 +202,12 @@
                   
                     
                 <div class="col-9 pl-0">
-                    <section id="active">
+                    <section id="active-section">
                         <img id="active-song-image" class="img-fluid active-img" src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/fe/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg" alt="">
                         <p id="active-song-text" class="text-center">! No song active !</p>
                     </section>
 
-                    <section id="Queue" style="display: none;  padding-top: 0; overflow: scroll">
+                    <section id="queue-section" style="display: none;  padding-top: 0; overflow: scroll">
 
                         <table class="table">
                             <thead style="border-top: none;">
@@ -218,7 +225,7 @@
                           </table>
                     </section>
 
-                    <section id="All" style="display: none;  padding-top: 0; overflow: scroll">
+                    <section id="all-section" style="display: none;  padding-top: 0; overflow: scroll">
 
                         <table class="table">
                             <thead style="border-top: none;">
@@ -236,6 +243,23 @@
                             </tbody>
                           </table>
                     </section>   
+
+
+                    <section id="settings-section" style="display: none;  padding-top: 0; overflow: scroll"></section>
+                    <section id="logs-section" style="display: none;  padding-top: 0; overflow: scroll">
+                        <table class="table">
+                            <thead style="border-top: none;">
+                              <tr>
+                                <th scope="col">Message</th>
+                                <th scope="col">Date</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                          </table>
+                    
+                    </section>
                 </div> 
 
             </div>
@@ -270,65 +294,28 @@
         
         <script>
 
-            // Get Active and Queue.
-            const active = document.getElementById('active');
-            const queue = document.getElementById('Queue');
-            const all = document.getElementById('All');
-            // Display Active if active is clicked.
-            const activeBtn = document.getElementById('active-btn');
-            const queueBtn = document.getElementById('queue-btn');
-            const allBtn = document.getElementById('all-btn');
-
-            activeBtn.addEventListener('click', () => {
-                active.style.display = 'block';
-                queue.style.display = 'none';
-                all.style.display = 'none';
-
-                activeBtn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
-                queueBtn.style.backgroundColor = '';
-                allBtn.style.backgroundColor = '';
-
-                activeBtn.style.color = '#ffc107';
-                queueBtn.style.color = '#ffffff';
-                allBtn.style.color = '#ffffff';
+             const sections = ["active", "queue", "all", "settings", "logs"];
+            for (let i=0; i<sections.length;i++){
+                const section = document.getElementById(sections[i]+"-section");
+                const btn = document.getElementById(sections[i]+"-btn");
+                
+                btn.addEventListener('click', () => {
+                    for (let i=0; i<sections.length;i++){
+                        const section = document.getElementById(sections[i]+"-section");
+                        const btn = document.getElementById(sections[i]+"-btn");
+                        console.log(section, sections[i]);
+                        section.style.display = 'none';
+                        btn.style.backgroundColor = '';
+                        btn.style.color = '#ffffff';
+                    }
+                    section.style.display = 'block';
+                    btn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
+                    btn.style.color = '#ffc107';
+                });
+            }
             
-            });
-            activeBtn.click();
+            document.getElementById("active-btn").click()
 
-            // Display Queue if queue is clicked.
-            queueBtn.addEventListener('click', () => {
-                queue.style.display = 'block';
-                active.style.display = 'none';
-                all.style.display = 'none';
-
-                queueBtn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
-                activeBtn.style.backgroundColor = '';
-                allBtn.style.backgroundColor = '';
-
-
-                queueBtn.style.color = '#ffc107';
-                activeBtn.style.color = '#ffffff';
-                allBtn.style.color = '#ffffff';
-            });
-
-
-            // Display all songs if all songs is clicked.
-            allBtn.addEventListener('click', () => {
-                all.style.display = 'block';
-                active.style.display = 'none';
-                queue.style.display = 'none';
-
-                allBtn.style.backgroundColor = 'rgba(27, 27,27, 0.7)';
-                activeBtn.style.backgroundColor = '';
-                queueBtn.style.backgroundColor = '';
-
-                allBtn.style.color = '#ffc107';
-                activeBtn.style.color = '#ffffff';
-                queueBtn.style.color = '#ffffff';
-            });
-
-
-   
 
             // Protect the string from XSS.
             function escapeHtml(unsafe) {
@@ -431,57 +418,20 @@
                 
 
                 table.appendChild(tr);
-                // const table = document.querySelector('#All table tbody');
-                // const tr = document.createElement('tr');
-                // const td1 = document.createElement('td');
-                // const td2 = document.createElement('td');
-                // const td3 = document.createElement('td');
-                // const td4 = document.createElement('td');
-                // const td5 = document.createElement('td');
-                // const td6 = document.createElement('td');
-
-                // const img = document.createElement('img');
-                // img.src = image;
-                // img.className = 'img-fluid';
-                // img.width = 100;
-                // img.height = 100;
-
-                // tr.setAttribute('id', id);
-                
-                // name = escapeHtml(name);
-                // requester = escapeHtml(requester);
-                
-                // td1.innerHTML = `<img class="img-fluid" src="${image}" width=100 height=100>`;
-                // td2.innerHTML = `<td class="song-name">${name}</td>`;
-                // td3.innerHTML = `<td>${secondsToMinutesAndSeconds(duration)}</td>`;
-                // td4.innerHTML = `<td>${requester}</td>`;
-                // td5.innerHTML = `<td style="white-space: nowrap">
-                //                     <button style="font-size: 13px;" class="btn btn-success btn-sm text-white" onclick="alert('queue_' + '${id}')">Queue</button>
-                //                     <button style="font-size: 13px;" class="btn btn-danger btn-sm text-white" onclick="alert('delete_' + '${id}')">Delete</button>
-                //                 </td>`;
-
-                // tr.appendChild(td1);
-                // tr.appendChild(td2);
-                // tr.appendChild(td3);
-                // tr.appendChild(td4);
-                // tr.appendChild(td5);
-                // tr.appendChild(td6);
-
-                // table.appendChild(tr);
 
             }
 
 
             // Remove song from all.
             const removeSongFromAll = (id) => {
-                const table = document.querySelector('#All table tbody');
+                const table = document.querySelector('#all-section table tbody');
                 const tr = document.getElementById(id);
                 table.removeChild(tr);
             }
 
 
             removeSongFromQueue = (id) => {
-                const table = document.querySelector('#Queue table tbody');
+                const table = document.querySelector('#queue-section table tbody');
                 const tr = document.getElementById(id);
                 table.removeChild(tr);
             }
@@ -517,12 +467,36 @@
             }
 
 
+            const addToLog = (message, data, type) => {
+                const log = document.querySelector('#logs-section table tbody');
+                const tr = document.createElement('tr');
+                const td1 = document.createElement('td');
+                const td2 = document.createElement('td');
+
+                td1.innerHTML = `<td>${message}</td>`;
+                td2.innerHTML = `<td>${data}</td>`;
 
 
+                if (type === 'success') {
+                    tr.className = 'text-lime';
+                } else if (type === 'warning') {
+                    tr.className = 'text-warning';
+                } else {
+                    tr.className = 'text-danger';
+                }
 
-            
-            
+                // Add the p-0 class onto the tds.
+                td1.className = 'p-0';
+                td2.className = 'p-0';
 
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+
+                log.appendChild(tr);               
+            }
+
+
+      
 
         </script>
 
