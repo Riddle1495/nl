@@ -467,14 +467,14 @@
             }
 
 
-            const addToLog = (message, data, type) => {
+            const addLog = (message, date, type) => {
                 const log = document.querySelector('#logs-section table tbody');
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td');
                 const td2 = document.createElement('td');
 
                 td1.innerHTML = `<td>${message}</td>`;
-                td2.innerHTML = `<td>${data}</td>`;
+                td2.innerHTML = `<td>${date}</td>`;
 
 
                 if (type === 'success') {
