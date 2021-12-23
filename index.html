@@ -82,7 +82,10 @@
             section {
                 background-color: var(--darkest-color);
                 height: 525px;
-                
+                display: none;
+                padding-top: 0;
+                overflow: scroll;
+                overflow-x: hidden;
                 
             }
 
@@ -165,6 +168,9 @@
             .text-lime {
                 color: #aeea00;
             }
+
+
+
         </style>
     </head>
     <body>
@@ -221,7 +227,7 @@
                         <p id="active-song-text" class="text-center">! No song active !</p>
                     </section>
 
-                    <section id="queue-section" style="display: none;  padding-top: 0; overflow: scroll">
+                    <section id="queue-section">
 
                         <table class="table">
                             <thead style="border-top: none;">
@@ -239,7 +245,7 @@
                           </table>
                     </section>
 
-                    <section id="all-section" style="display: none;  padding-top: 0; overflow: scroll">
+                    <section id="all-section">
 
                         <table class="table">
                             <thead style="border-top: none;">
@@ -259,14 +265,14 @@
                     </section>   
 
 
-                    <section id="settings-section" style="display: none;  padding-top: 0; overflow: scroll">
+                    <section id="settings-section">
                         <!-- Create an input text field with bootstrap classes. -->
                         <label for="jukebox-listener-count">JukeBox Listener</label>
                         <!-- Create an input and make sure it always start with "!". -->
                         <input type="text" class="form-control settings-textinput pl-0 pr-0" style="width: 20px; border-radius: 0; border-bottom-left-radius: 0.25rem; border-top-left-radius: 0.25rem; padding: 0.375rem 0.75rem;" value="!" readonly /><input type="text" class="form-control settings-textinput" id="jukebox-listener" style="margin-left:0;border-top-left-radius: 0;border-bottom-left-radius: 0; padding-left:0" value="!jukebox">
                         
                     </section>
-                    <section id="logs-section" style="display: none;  padding-top: 0; overflow: scroll">
+                    <section id="logs-section">
                         <table class="table">
                             <thead style="border-top: none;">
                               <tr>
