@@ -322,6 +322,22 @@
         
         
         <script>
+            const allSongSearch = document.getElementById('all-song-search');
+            // Search through the songs by name (second td).
+            const searchAll  = (e) => {
+                const table = document.querySelector('#all-section table tbody');
+                const search = e.target.value.toLowerCase();
+                Array.from(table.children).forEach(tr => {
+                    const name = tr.children[1].innerText.toLowerCase();
+                    if (name.indexOf(search) != -1) {
+                        tr.style.display = '';
+                    } else {
+                        tr.style.display = 'none';
+                    }
+                });
+            }
+            allSongSearch.addEventListener('keyup', searchAll);
+
             let totalSongs = 0;
              const sections = ["active", "queue", "all", "settings", "logs"];
             for (let i=0; i<sections.length;i++){
@@ -403,7 +419,6 @@
                 
 
                 table.appendChild(tr);
-
             }
 
             const addSongToAll = (image, name, duration, requester, id) => {
@@ -449,6 +464,8 @@
                 table.appendChild(tr);
                 totalSongs++;
                 document.getElementById('all-song-search').placeholder = `Search through ${totalSongs} songs...`;
+                searchAll({target: allSongSearch});
+
             }
 
             // Remove song from all.
@@ -459,6 +476,7 @@
                 totalSongs--;
                 // Update all-song-search placeholder.
                 document.getElementById('all-song-search').placeholder = `Search through ${totalSongs} songs...`;
+                searchAll({target: allSongSearch});
             }
 
 
@@ -533,20 +551,7 @@
             }
 
 
-            const allSongSearch = document.getElementById('all-song-search');
-            // Search through the songs by name (second td).
-            allSongSearch.addEventListener('keyup', (e) => {
-                const table = document.querySelector('#all-section table tbody');
-                const search = e.target.value.toLowerCase();
-                Array.from(table.children).forEach(tr => {
-                    const name = tr.children[1].innerText.toLowerCase();
-                    if (name.indexOf(search) != -1) {
-                        tr.style.display = '';
-                    } else {
-                        tr.style.display = 'none';
-                    }
-                });
-            });
+          
             
       
 
