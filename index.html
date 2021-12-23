@@ -267,7 +267,7 @@
                         <table class="table">
                             <thead style="border-top: none;">
                               <tr>
-                                <th scope="col">Error code</th>
+                                <th scope="col">Code</th>
                                 <th scope="col">Message</th>
                                 <th scope="col">Date</th>
                               </tr>
@@ -497,11 +497,11 @@
                       
 
                 if (type === 'success') {
-                    tr.className = 'text-lime';
+                    tr.style.backgroundColor = 'rgba(15, 65, 27, 1)';
                 } else if (type === 'warning') {
-                    tr.className = 'text-warning';
+                    tr.style.backgroundColor = 'rgba(100, 75, 0, 1)';
                 } else {
-                    tr.className = 'text-danger';
+                    tr.style.backgroundColor = 'rgba(86, 20, 27, 1)';
                 }
 
                 // Add the p-0 class onto the tds.
