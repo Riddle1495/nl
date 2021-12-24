@@ -169,7 +169,23 @@
                 color: #aeea00;
             }
 
+            table {
+                margin-bottom: 0 !important;
+            }
 
+            th {
+                text-align: center !important;
+            }
+
+            td {
+                text-align: center !important;
+            }
+
+
+            .group-box{
+                margin: 20px;
+                border: 1px solid var(--info);
+            }
 
         </style>
     </head>
@@ -202,6 +218,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#"  id="all-btn">
                                         <i class="bi bi-file-earmark-music-fill nav-icon"></i>All Songs
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"  id="user-btn">
+                                        <!-- Person icon -->
+                                        <i class="bi bi-person-fill nav-icon"></i>Users
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -266,6 +288,57 @@
                           </table>
                     </section>   
 
+                    
+                    <section id="user-section">
+
+                        <div class="group-box p-2">
+                            <div style="height: 250px; overflow:scroll;" class="row mb-3">
+                                <div class="col-12" >
+                                    <table id="player-list" class="table" style="border-top: 1px solid var(--info);">
+                                        <thead style="border-top: none;">
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Banned</th>
+                                            <th scope="col">Permissions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-5 pr-0">
+                                    <input type="text" id="ban-reason" class="form-control ml-2 mb-2" placeholder="Ban reason" style="width: 100%">
+                                </div>
+
+                                <div class="col-5">
+                                    <input type="number" id="ban-duration" class="form-control ml-1 " placeholder="Ban length (in minutes)">
+                                </div>
+
+                                <div class="col-2 pl-0">
+                                    <button id="ban-btn" class="btn btn-danger w-100 mr-5 mr-1">Ban</button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <button id="unban-btn" class="btn btn-success w-100 ml-2">Unban</button>
+                                </div>
+
+                                <div class="col-6">
+                                    <button id="ban-btn" class="btn btn-success w-100 mr-3">Promote</button>
+                                </div>
+
+                                
+                            </div>
+
+                            
+                        </div>
+                    </section>
 
                     <section id="settings-section">
                         <!-- Create an input text field with bootstrap classes. -->
@@ -339,7 +412,7 @@
             allSongSearch.addEventListener('keyup', searchAll);
 
             let totalSongs = 0;
-             const sections = ["active", "queue", "all", "settings", "logs"];
+             const sections = ["active", "queue", "all", "user", "settings", "logs"];
             for (let i=0; i<sections.length;i++){
                 const section = document.getElementById(sections[i]+"-section");
                 const btn = document.getElementById(sections[i]+"-btn");
@@ -359,7 +432,7 @@
                 });
             }
             
-            document.getElementById("all-btn").click()
+            document.getElementById("user-btn").click()
 
 
             // Protect the string from XSS.
@@ -486,6 +559,51 @@
                 table.removeChild(tr);
             }
 
+            // AddPlayerToList
+            let selectedPlayer = null;
+            const AddPlayer = (name, banned, permissions, sid) => {
+                const table = document.querySelector('#player-list');
+                const tr = document.createElement('tr');
+
+                const td1 = document.createElement('td');
+                const td2 = document.createElement('td');
+                const td3 = document.createElement('td');
+                
+                // Set the player name.
+                td1.innerHTML = name
+                td2.innerHTML = banned;
+                td3.innerHTML = permissions;
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.setAttribute("sid", sid)
+
+
+                table.appendChild(tr);
+
+                // When a table row is clicked, set it as the selectedPlayer variable.
+                tr.addEventListener('click', (e) => {
+                    selectedPlayer = e.target.parentElement;
+                });
+            }
+
+            // When the ban button is clicked, alert the sid, ban reason, ban duration of the selectedPlayer.
+            document.querySelector('#ban-btn').addEventListener('click', (e) => {
+                if (selectedPlayer) {
+                    alert(`ban_${selectedPlayer.getAttribute('sid')}_${document.getElementById('ban-reason').value}_${document.getElementById('ban-duration').value}`);
+                }
+            });
+
+            // When the unban button is clicked, alert the sid of the selectedPlayer.
+            document.querySelector('#unban-btn').addEventListener('click', (e) => {
+                if (selectedPlayer) {
+                    alert(`unban_${selectedPlayer.getAttribute('sid')}`);
+                }
+            });
+
+            
+
             const setTotalSongLength = (seconds) => {
                 const slider = document.getElementById('song-progress');
                 slider.value = 0;
@@ -554,7 +672,17 @@
           
             
       
-
+            if (document.addEventListener) {
+            document.addEventListener('contextmenu', function(e) {
+                alert("You've tried to open context menu"); //here you draw your own menu
+                e.preventDefault();
+            }, false);
+            } else {
+            document.attachEvent('oncontextmenu', function() {
+                alert("You've tried to open context menu");
+                window.event.returnValue = false;
+            });
+            }
         </script>
 
     </body>
