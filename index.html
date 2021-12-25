@@ -291,10 +291,10 @@
                     
                     <section id="user-section">
 
-                        <div class="group-box p-2">
-                            <div style="height: 250px; overflow:scroll;" class="row mb-3">
-                                <div class="col-12" >
-                                    <table id="player-list" class="table" style="border-top: 1px solid var(--info);">
+                        <div class="group-box">
+                            <div style="" class="row mb-3 mr-0">
+                                <div class="col-12 pr-0" style="height: 250px; overflow:scroll; overflow-x: hidden;" >
+                                    <table id="player-list" class="table" style="">
                                         <thead style="border-top: none;">
                                         <tr>
                                             <th scope="col">Name</th>
@@ -585,12 +585,21 @@
                 // When a table row is clicked, set it as the selectedPlayer variable.
                 tr.addEventListener('click', (e) => {
                     selectedPlayer = e.target.parentElement;
+                    // Set background color to light blue and remove the other background color of other trs..
+                    selectedPlayer.style.backgroundColor = 'blue';
+                    const trs = document.querySelectorAll('#player-list tr');
+                    for (let i = 0; i < trs.length; i++) {
+                        if (trs[i] !== selectedPlayer) {
+                            trs[i].style.backgroundColor = 'rgba(0,0,0,0)';
+                        }
+                    }
                 });
             }
-
+            AddPlayer("x", "Banned", "Owner", 555)
             // When the ban button is clicked, alert the sid, ban reason, ban duration of the selectedPlayer.
             document.querySelector('#ban-btn').addEventListener('click', (e) => {
                 if (selectedPlayer) {
+                    // Set the background color of the selectedPlayer to red.
                     alert(`ban_${selectedPlayer.getAttribute('sid')}_${document.getElementById('ban-reason').value}_${document.getElementById('ban-duration').value}`);
                 }
             });
